@@ -72,12 +72,12 @@ public class StringArrayUtils {
      * @return true if the order of the array is the same backwards and forwards
      */ // TODO
     public static boolean isPalindromic(String[] array) {
-        for (int i = 0; i < array.length / 2; i++) {
+        for (int i = 0; i < array.length/2; i++) {
             if (array[0] != array[array.length - 1]) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -124,15 +124,16 @@ public class StringArrayUtils {
      * @return array of Strings with consecutive duplicates removes
      */ // TODO
     public static String[] removeConsecutiveDuplicates(String[] array) {
-        String preArray = "";
-        for (int i = 0; i < array.length - 1; i++) {
+        String placeHolder = "";
+        for (int i = 1; i < array.length-1; i++) {
             if (!array[i].equals(array[i + 1])) {
-                preArray += (array[i] + " ");
-            }
+                placeHolder += (array[i] + " ");
+            }//[3,4,4,5,5,4,3,6] --> String "4 5" (2) --> array[4 5] --> array[1]
+            //preArray += (array[1]) --> "[4 5, ]"
         }
-        preArray += (array[array.length - 1]);
-        String[] outArray = preArray.split(" ");
-        return outArray;
+        placeHolder += (array[array.length-1]); //Adding the final index to the string
+        String[] newStringArray = placeHolder.split(" "); //splitting the array
+        return newStringArray;
     }
 
     /**
@@ -140,13 +141,18 @@ public class StringArrayUtils {
      * @return array of Strings with each consecutive duplicate occurrence concatenated as a single string in an array of Strings
      */ // TODO
     public static String[] packConsecutiveDuplicates(String[] array) {
-        String grouping = array[0];
+        String similarValues = array[0];
         for (int i = 1; i < array.length; i++) {
             if (array[i] == array[i - 1]) {
-                grouping += (array[i]);
-            } else grouping += (" " + array[i]);
+                similarValues += (array[i]);
+            } else similarValues += (" " + array[i]);
         }
-        String[] outArray = grouping.split(" ");
-        return outArray;
+        String[] stringArray = similarValues.split(" ");
+        return stringArray;
+        //You start at 1 because in the if statement, you're looking at the value at index one to the element prior (i-1)
+        //and you compared the value at array[1] and array[0]
+        //if they are the same, you group them at array[i]
+        //else grouping += " " + array[i] meaning they are in their own grouping in the array
+
     }
 }
